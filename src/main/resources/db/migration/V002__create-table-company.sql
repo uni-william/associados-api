@@ -1,14 +1,11 @@
-create table public.associate (
+create table public.company (
   id uuid not null,
-  birth_date date,
   document varchar(255),
   email varchar(255),
   name varchar(255),
   phone varchar(255),
-  blood_type varchar(255),
-  contact varchar(255),
-  phone_contact varchar(255),
-  status varchar(255),
+  associate_tax numeric(15, 2),
+  day_base integer,
   address_city varchar(255),
   address_complement varchar(255),
   address_neighborhood varchar(255),
@@ -17,7 +14,7 @@ create table public.associate (
   address_street varchar(255),
   address_zip_code varchar(255),
   created_at timestamp with time zone,
-  constraint uq_contact_email unique (email),
-  constraint uq_document unique (document),
+  constraint uq_company_email unique (email),
+  constraint uq_company_document unique (document),
   primary key (id)
 );

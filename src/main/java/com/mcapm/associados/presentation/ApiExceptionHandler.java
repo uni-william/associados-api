@@ -2,6 +2,7 @@ package com.mcapm.associados.presentation;
 
 
 import com.mcapm.associados.domain.model.DomainException;
+import com.mcapm.associados.domain.model.associates.AssociateNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
@@ -47,6 +48,14 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         return super.handleExceptionInternal(ex, problemDetail, headers, status, request);
     }
 
+    @ExceptionHandler({AssociateNotFoundException.class})
+    public ProblemDetail handleUnprocessableAssociateNotFoundException(Exception e) {
+        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
+        problemDetail.setTitle("Not found");
+        problemDetail.setDetail(e.getMessage());
+        problemDetail.setType(URI.create("/errors/not-found"));
+        return problemDetail;
+    }
 
     @ExceptionHandler({DomainException.class})
     public ProblemDetail handleUnprocessableEntityException(Exception e) {
@@ -55,8 +64,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         problemDetail.setDetail(e.getMessage());
         problemDetail.setType(URI.create("/errors/unprocessable-entity"));
         return problemDetail;
-    }
 
+    }
 
     @ExceptionHandler(Exception.class)
     public ProblemDetail handleException(Exception e) {
