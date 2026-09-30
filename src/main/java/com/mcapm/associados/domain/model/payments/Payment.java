@@ -1,11 +1,14 @@
 package com.mcapm.associados.domain.model.payments;
 
+import com.mcapm.associados.domain.model.IdGenerator;
 import com.mcapm.associados.domain.model.associates.Associate;
+import com.mcapm.associados.domain.model.associates.AssociateStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.UUID;
 
 @Setter(AccessLevel.PRIVATE)
@@ -28,4 +31,22 @@ public class Payment {
     @Column(name = "payment_date")
     private LocalDate paymentDate;
     private BigDecimal amount;
+
+    public static Payment brandNew(Associate associate, LocalDate dueDate, BigDecimal amount) {
+        Objects.requireNonNull(associate);
+        Objects.requireNonNull(dueDate);
+        Objects.requireNonNull(amount);
+        return new Payment(
+                IdGenerator.generateTimeBasedUUID(),
+                associate,
+                dueDate,
+                null,
+                amount
+                );
+    }
+
+    public void confirmPayment(LocalDate paymentDate) {
+        this.paymentDate = paymentDate;
+    }
+
 }

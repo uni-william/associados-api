@@ -8,5 +8,7 @@ import java.util.UUID;
 
 public interface PaymentRepository extends JpaRepository<Payment, UUID> {
     List<Payment> findByAssociateId(UUID associateId);
-    List<Payment> findByAssociateIdAndBetweenDueDate(UUID associateId, LocalDate begin,  LocalDate end);
+    List<Payment> findByAssociateIdAndDueDateBetween(UUID associateId, LocalDate begin,  LocalDate end);
+    boolean existsByAssociateIdAndDueDate(UUID associateId, LocalDate dueDate
+    );
 }

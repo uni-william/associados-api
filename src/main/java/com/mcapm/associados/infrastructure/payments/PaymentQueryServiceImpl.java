@@ -23,7 +23,7 @@ public class PaymentQueryServiceImpl implements PaymentQueryService {
     @Override
     public PaymentOutput findOne(UUID paymentId) {
         return paymentRepository.findById(paymentId)
-                .map(payment -> mapper.convert(payment, PaymentOutput.class))
+                .map(PaymentOutput::from)
                 .orElseThrow(PaymentNotFoundException::new);
     }
 
@@ -31,15 +31,15 @@ public class PaymentQueryServiceImpl implements PaymentQueryService {
     public List<PaymentOutput> findByAssociateId(UUID associateId) {
         return paymentRepository.findByAssociateId(associateId)
                 .stream()
-                .map(payment -> mapper.convert(payment, PaymentOutput.class))
+                .map(PaymentOutput::from)
                 .toList();
     }
 
     @Override
-    public List<PaymentOutput> findByAssociateIdAndBetweenDueDate(UUID associateId, LocalDate begin, LocalDate end) {
-        return paymentRepository.findByAssociateIdAndBetweenDueDate(associateId, begin, end)
+    public List<PaymentOutput> findByAssociateIdAndDueDateBetween(UUID associateId, LocalDate begin, LocalDate end) {
+        return paymentRepository.findByAssociateIdAndDueDateBetween(associateId, begin, end)
                 .stream()
-                .map(payment -> mapper.convert(payment, PaymentOutput.class))
+                .map(PaymentOutput::from)
                 .toList();
     }
 }

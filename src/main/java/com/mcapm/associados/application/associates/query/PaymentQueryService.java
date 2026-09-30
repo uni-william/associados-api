@@ -8,5 +8,5 @@ import java.util.UUID;
 public interface PaymentQueryService {
     PaymentOutput findOne(UUID paymentId);
     List<PaymentOutput> findByAssociateId(UUID associateId);
-    List<PaymentOutput> findByAssociateIdAndBetweenDueDate(UUID associateId, LocalDate begin, LocalDate end);
+    List<PaymentOutput> findByAssociateIdAndDueDateBetween(UUID associateId, LocalDate begin, LocalDate end);
 }
